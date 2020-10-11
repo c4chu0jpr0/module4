@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email</title>
+</head>
+<body>
+<div th:object="${email}">
+    <p>Language: <span th:text="${email.getLanguages()}"></span></p>
+    <p>Page Size: <span th:text="${email.getSize()}"></span></p>
+    <p>Spams filter: <span th:text="${email.getSpams()}"></span></p>
+    <p>Signature: <span th:text="${email.getSignature()}"></span></p>
+</div>
+</body>
+</html>

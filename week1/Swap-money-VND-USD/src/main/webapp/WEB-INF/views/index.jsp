@@ -8,9 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Calculate</title>
 </head>
 <body>
-$END$
+<h1>Calculate: </h1>
+<form action= "/calculate?vnd=" >
+    <input type="number" name="vnd" value="${vnd}">
+    <input type="submit" value="submit">
+</form>
+<p>Result: ${usd}</p>
 </body>
 </html>

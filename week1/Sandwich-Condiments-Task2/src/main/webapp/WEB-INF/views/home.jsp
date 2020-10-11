@@ -8,9 +8,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Sandwich Condiments</title>
 </head>
 <body>
-$END$
+<h1>Sandwich Condiments</h1>
+<form action="/save" method="post">
+    <input type="checkbox" id="lettuce" name="condiment" value="lettuce">
+    <label for="lettuce"> Lettuce</label><br>
+    <input type="checkbox" id="tomato" name="condiment" value="tomato">
+    <label for="tomato"> Tomato</label><br>
+    <input type="checkbox" id="mustard" name="condiment" value="mustard">
+    <label for="mustard"> Mustard</label><br>
+    <input type="checkbox" id="sprouts" name="condiment" value="sprouts">
+    <label for="sprouts"> Sprouts</label><br><br>
+    <input type="submit" value="save">
+</form>
+<p>Lựa chọn người dùng: ${result}</p>
 </body>
 </html>

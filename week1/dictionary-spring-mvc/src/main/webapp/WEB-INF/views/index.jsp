@@ -8,9 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Dictionary</title>
 </head>
 <body>
-$END$
+<h1>Dictionary</h1>
+<form action="/dictionary?word=">
+    <input type="text" name="word">
+    <input type="submit" value="search">
+</form>
+<p>Result: ${result}</p>
 </body>
 </html>
