@@ -10,14 +10,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 public class CustomerService implements ICustomerService{
-    @Autowired
-    private EntityManager entityManager;
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public Iterable<Customer> findAll() {
+    public Iterable<Customer> findAll(){
+        EntityManager entityManager =sessionFactory.createEntityManager();
         String queryStr = "select c from Customer as c";
         TypedQuery<Customer> query = entityManager.createQuery(queryStr,Customer.class);
         return query.getResultList();
@@ -25,6 +24,7 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public Customer findById(Integer id) {
+        EntityManager entityManager =sessionFactory.createEntityManager();
         String queryStr="SELECT c from  Customer as c where c.id = :id";
         TypedQuery<Customer> query = entityManager.createQuery(queryStr,Customer.class);
         query.setParameter("id",id);
@@ -79,9 +79,22 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public void remove(Integer id) {
-        String queryStr="delete from Customer as c where c.id = :id";
-        TypedQuery<Customer> query= entityManager.createQuery(queryStr,Customer.class);
-        query.setParameter("id",id);
-        query.getSingleResult();
+        Session session = null;
+        Transaction transaction = null;
+        try{
+            session= sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.remove(findById(id));
+            transaction.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }finally {
+            if (session != null){
+                session.close();
+            }
+        }
     }
 }
