@@ -12,12 +12,24 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
+
     public Customer() {
     }
 
     @Override
     public String toString() {
         return String.format("Customer[id=%d, name='%s']",id,name);
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
     public Customer(String name) {

@@ -1,9 +1,10 @@
 package com.codegym.config;
 
-import com.codegym.repository.CustomerRepository;
-import com.codegym.repository.CustomerRepositoryImpl;
-import com.codegym.service.CustomerService;
-import com.codegym.service.CustomerServiceImp;
+import com.codegym.formatter.ProvinceFormatter;
+import com.codegym.service.CustomerService.CustomerService;
+import com.codegym.service.CustomerService.CustomerServiceImp;
+import com.codegym.service.ProvinceService.ProvinceService;
+import com.codegym.service.ProvinceService.ProvinceServiceImp;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -11,9 +12,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -36,6 +38,8 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.codegym.controller")
+@EnableJpaRepositories("com.codegym.repository")
+@EnableSpringDataWebSupport
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -110,7 +114,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/tuan");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/tuan?useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("djenha88");
         return dataSource;
@@ -130,8 +134,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return properties;
     }
     @Bean
-    public CustomerRepository customerRepository(){
-        return new CustomerRepositoryImpl();
+    public ProvinceService provinceService(){return new ProvinceServiceImp();
     }
     @Bean
     public CustomerService customerService(){
@@ -142,5 +145,10 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
 //        super.addFormatters(registry);
 //        registry.addFormatter(new ClassesFormater(applicationContext.getBean(CustomerRepository.class)));
 //    }
+@Override
+public void addFormatters(FormatterRegistry registry) {
+    super.addFormatters(registry);
+        registry.addFormatter(new ProvinceFormatter(applicationContext.getBean(ProvinceService.class)));
+}
 }
 
