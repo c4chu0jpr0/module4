@@ -95,7 +95,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     }
 
 
-//    //rieng
+//    //rieng Hibernate
 //    @Bean
 //    public LocalSessionFactoryBean sessionFactory() {
 //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

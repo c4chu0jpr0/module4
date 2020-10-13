@@ -1,5 +1,9 @@
 package com.codegym.config;
 
+import com.codegym.repository.BlogRepository;
+import com.codegym.repository.BlogRepositoryImp;
+import com.codegym.service.BlogService;
+import com.codegym.service.BlogServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -98,7 +102,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return em;
     }
 
-
 //    //rieng
 //    @Bean
 //    public LocalSessionFactoryBean sessionFactory() {
@@ -165,5 +168,12 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
             DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
-
+    @Bean
+    public BlogRepository blogRepository(){
+        return new BlogRepositoryImp();
+    }
+    @Bean
+    public BlogService blogService(){
+        return new BlogServiceImp();
+    }
 }

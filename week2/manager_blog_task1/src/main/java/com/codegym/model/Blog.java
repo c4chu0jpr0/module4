@@ -15,6 +15,11 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(String name, String content) {
+        this.name = name;
+        this.content = content;
+    }
+
     public Blog(String name, String img, String content) {
         this.name = name;
         this.img = img;
