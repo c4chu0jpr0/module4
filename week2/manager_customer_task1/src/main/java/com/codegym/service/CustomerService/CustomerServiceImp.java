@@ -1,5 +1,6 @@
 package com.codegym.service.CustomerService;
 
+import com.codegym.exception.NotFoundException;
 import com.codegym.model.Customer;
 import com.codegym.model.Province;
 import com.codegym.repository.CustomerRepository;
@@ -19,8 +20,16 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
-    public Customer findById(Long id) {
-        return customerRepository.findOne(id);
+    public Customer findById(Long id)  {
+        Customer customer = customerRepository.findOne(id);
+        if (customer == null){
+            try {
+                throw new NotFoundException();
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return customer;
     }
 
     @Override

@@ -23,40 +23,40 @@ public class ProvinceController {
         model.addAttribute("provinces",provinces);
         return "/province/list";
     }
-    @GetMapping("/create-province")
+    @GetMapping("/create")
     public String showFormCreate(Model model){
         model.addAttribute("province",new Province());
         return "/province/create";
     }
-    @PostMapping("/create-province")
+    @PostMapping("/create")
     public String createProvince(@ModelAttribute("province") Province province, Model model){
         provinceService.save(province);
         model.addAttribute("message","New province created successfully");
         return "/province/create";
     }
-    @GetMapping("/edit-province/{id}")
+    @GetMapping("/edit/{id}")
     public String showFormEdit(Model model, @PathVariable Long id){
         model.addAttribute("province",provinceService.findById(id));
         return "/province/edit";
     }
-    @PostMapping("/edit-province/{id}")
+    @PostMapping("/edit/{id}")
     public String editProvince(@ModelAttribute("province") Province province, Model model){
         provinceService.save(province);
         model.addAttribute("message","Province updated successfully");
         return "/province/edit";
     }
-    @GetMapping("/delete-province/{id}")
+    @GetMapping("/delete/{id}")
     public String showFormDelete(Model model, @PathVariable Long id){
         model.addAttribute("province",provinceService.findById(id));
         return "/province/delete";
     }
-    @PostMapping("/delete-province/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteProvince(Model model, @ModelAttribute Province province){
         provinceService.remove(province.getId());
         model.addAttribute("message","xóa thành công! " );
         return "/province/delete";
     }
-    @GetMapping("/detail-province/{id}")
+    @GetMapping("/detail/{id}")
     public String showFormDetail(@PathVariable("id") Long id,Model model){
         Province province = provinceService.findById(id);
         Iterable<Customer> customers = customerService.findAllByProvince(province);

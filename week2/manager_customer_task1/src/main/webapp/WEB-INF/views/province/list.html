@@ -16,9 +16,9 @@
     </tr>
     <tr th:each="province: ${provinces}">
         <td th:text="${province.name}"></td>
-        <td><a th:href="@{'/provinces/detail-province/'+ ${province.getId()}}">chi tiết</a></td>
-        <td><a th:href="@{'/provinces/edit-province/'+ ${province.getId()}}">edit</a></td>
-        <td><a th:href="@{'/provinces/delete-province/'+ ${province.getId()}}">Xóa</a></td>
+        <td><a th:href="@{'/provinces/detail/'+ ${province.getId()}}">chi tiết</a></td>
+        <td><a th:href="@{'/provinces/edit/'+ ${province.getId()}}">edit</a></td>
+        <td><a th:href="@{'/provinces/delete/'+ ${province.getId()}}">Xóa</a></td>
     </tr>
 </table>
 </body>

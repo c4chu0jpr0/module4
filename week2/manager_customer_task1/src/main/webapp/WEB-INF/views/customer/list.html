@@ -16,6 +16,7 @@
         <tr>
             <td>Name</td>
             <td>Province</td>
+            <td>Detail</td>
             <td>Edit</td>
             <td>Delete</td>
         </tr>
@@ -23,6 +24,7 @@
         <tr>
             <td th:text="${customer.name}"></td>
             <td th:text="${customer.province.name}"></td>
+            <td><a th:href="@{'/customers/detail/'+ ${customer.getId()}}">detail</a></td>
             <td><a th:href="@{'/customers/edit/'+ ${customer.getId()}}">edit</a></td>
             <td><a th:href="@{'/customers/delete/'+ ${customer.getId()}}">Xóa</a></td>
         </tr>

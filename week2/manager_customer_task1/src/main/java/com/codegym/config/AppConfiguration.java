@@ -1,5 +1,6 @@
 package com.codegym.config;
 
+import com.codegym.concern.Logger;
 import com.codegym.formatter.ProvinceFormatter;
 import com.codegym.service.CustomerService.CustomerService;
 import com.codegym.service.CustomerService.CustomerServiceImp;
@@ -12,6 +13,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
@@ -40,6 +42,7 @@ import java.util.Properties;
 @ComponentScan("com.codegym.controller")
 @EnableJpaRepositories("com.codegym.repository")
 @EnableSpringDataWebSupport
+@EnableAspectJAutoProxy
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -65,7 +68,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
-
 
     //chung
     @Bean
@@ -98,18 +100,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return em;
     }
 
-
-//    //rieng Hibernate
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan("com.student.model");
-//        sessionFactory.setHibernateProperties(additionalProperties());
-//
-//        return sessionFactory;
-//    }
-
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -129,8 +119,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.hbm2ddl.auto","update");
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
     @Bean
@@ -140,15 +130,14 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public CustomerService customerService(){
         return new CustomerServiceImp();
     }
-//    @Override
-//    public void addFormatters(FormatterRegistry registry){
-//        super.addFormatters(registry);
-//        registry.addFormatter(new ClassesFormater(applicationContext.getBean(CustomerRepository.class)));
-//    }
-@Override
-public void addFormatters(FormatterRegistry registry) {
-    super.addFormatters(registry);
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        super.addFormatters(registry);
         registry.addFormatter(new ProvinceFormatter(applicationContext.getBean(ProvinceService.class)));
 }
+    @Bean
+    public Logger logger(){
+        return new Logger();
+    }
 }
 

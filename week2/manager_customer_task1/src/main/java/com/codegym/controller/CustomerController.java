@@ -1,5 +1,6 @@
 package com.codegym.controller;
 
+import com.codegym.exception.NotFoundException;
 import com.codegym.model.Customer;
 import com.codegym.model.Province;
 import com.codegym.service.CustomerService.CustomerService;
@@ -23,6 +24,10 @@ public class CustomerController {
     @Autowired
     private ProvinceService provinceService;
 
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView showInputNotAcceptable(){
+        return new ModelAndView("customer/error404");
+    }
     @ModelAttribute("provinces")
     public Iterable<Province> provinces(){
         return provinceService.findAll();
@@ -60,7 +65,7 @@ public class CustomerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editCustomer(@ModelAttribute("customer") Customer customer){
+    public String editCustomer(@ModelAttribute("customer") Customer customer) {
         customerService.save(customer);
         return "redirect:/customers";
     }
@@ -70,4 +75,11 @@ public class CustomerController {
         customerService.remove(id);
         return "redirect:/customers";
     }
+    @GetMapping("/detail/{id}")
+    public String formDetail(@PathVariable Long id,Model model) throws NotFoundException {
+        model.addAttribute("customer", customerService.findById(id));
+        return "customer/detail";
+    }
+
+
 }
